@@ -1,0 +1,32 @@
+{% extends "base.html" %}  
+
+{% block body %}  
+<header>Регистрация</header>  
+<form action="{{ url_for('register') }}" method="POST">  
+    <label for="username">Логин:</label>  
+    <input type="text" id="username" name="username" required>  
+
+    <label for="password">Пароль:</label>  
+    <input type="password" id="password" name="password" required>  
+
+    <label for="first_name">Имя:</label>  
+    <input type="text" id="first_name" name="first_name" required>  
+
+    <label for="last_name">Фамилия:</label>  
+    <input type="text" id="last_name" name="last_name" required>  
+
+    <label for="region">Область:</label>  
+    <input type="text" id="region" name="region" required>  
+
+    <label for="district">Район:</label>  
+    <input type="text" id="district" name="district" required>  
+
+    <label for="birthdate">Дата рождения:</label>  
+    <input type="date" id="birthdate" name="birthdate" required>  
+
+    <button type="submit">Зарегистрироваться</button>  
+</form>  
+{% if error %}  
+    <div class="error">{{ error }}</div>  
+{% endif %}  
+{% endblock %}

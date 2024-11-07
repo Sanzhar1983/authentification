@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор вероятности ТБ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        select, button {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Калькулятор вероятности активного ТБ </h1>
+    <p>Добро пожаловать {{username}}</p>
+
+    
+    <form id="tbForm">
+        <label for="coughDuration">Длительность кашля:</label>
+        <select id="coughDuration">
+            <option value="0">Выберите</option>
+            <option value="10">Менее 2х недель</option>
+            <option value="20">Более 2х недель</option>
+        </select><br>
+
+        <label for="feverLevel">Температура:</label>
+        <select id="feverLevel">
+            <option value="0">Выберите</option>
+            <option value="7">Субфебрильная (37,2 – 37,9°С)</option>
+            <option value="3">Умеренно фебрильная (38,0 – 38,9°С)</option>
+            <option value="2">Высокая (39,0 – 40,0°С)</option>
+            <option value="1">Гипертермическая (выше 40,0°С)</option>
+        </select><br>
+
+        <label for="fatigue">Утомляемость:</label>
+        <select id="fatigue">
+            <option value="0">Выберите</option>
+            <option value="2">Да</option>
+            <option value="0">Нет</option>
+        </select><br>
+
+        <label for="weightLoss">Снижение веса:</label>
+        <select id="weightLoss">
+            <option value="0">Выберите</option>
+            <option value="0">Нет снижения за последний месяц</option>
+            <option value="2">1-4 кг и более кг за последний месяц</option>
+            <option value="4">5 и более кг за последний месяц</option>
+        </select><br>
+
+        <label for="nightSweats">Ночная потливость:</label>
+        <select id="nightSweats">
+            <option value="0">Выберите</option>
+            <option value="2">Да</option>
+            <option value="0">Нет</option>
+        </select><br>
+
+        <label for="previousTB">Болел ли ТБ за последние 2 года:</label>
+        <select id="previousTB">
+            <option value="0">Выберите</option>
+            <option value="10">Да</option>
+            <option value="0">Нет</option>
+        </select><br>
+
+        <label for="contactTB">Был ли в контакте с ТБ пациентом или с лицом с длительным кашлем (дома, на работе и др)?:</label>
+        <select id="contactTB">
+            <option value="0">Выберите</option>
+            <option value="10">Да</option>
+            <option value="0">Нет</option>
+        </select><br>
+
+        <label for="diabetes">Сахарный диабет:</label>
+        <select id="diabetes">
+            <option value="0">Выберите</option>
+            <option value="10">Да</option>
+            <option value="0">Нет</option>
+        </select><br>
+
+        <label for="immuneSystem">Ослабленный иммунитет (ВИЧ):</label>
+        <select id="immuneSystem">
+            <option value="0">Выберите</option>
+            <option value="10">Да</option>
+            <option value="0">Нет</option>
+        </select><br>
+
+        <label for="nutrition">Неполноценное питание:</label>
+        <select id="nutrition">
+            <option value="0">Выберите</option>
+            <option value="4">Да</option>
+            <option value="0">Нет</option>
+        </select><br>
+
+        <label for="tobacco">Употребление табака:</label>
+        <select id="tobacco">
+            <option value="0">Выберите</option>
+            <option value="2">Да</option>
+            <option value="0">Нет</option>
+        </select><br>
+
+        <button type="button" onclick="calculateTBProbability()">Рассчитать вероятность ТБ</button>
+    </form>
+    
+    <p id="result"></p>
+
+    <script>
+        function calculateTBProbability() {
+            let totalScore = 0;
+
+            totalScore += parseInt(document.getElementById("coughDuration").value);
+            totalScore += parseInt(document.getElementById("feverLevel").value);
+            totalScore += parseInt(document.getElementById("fatigue").value);
+            totalScore += parseInt(document.getElementById("weightLoss").value);
+            totalScore += parseInt(document.getElementById("nightSweats").value);
+            totalScore += parseInt(document.getElementById("previousTB").value);
+            totalScore += parseInt(document.getElementById("contactTB").value);
+            totalScore += parseInt(document.getElementById("diabetes").value);
+            totalScore += parseInt(document.getElementById("immuneSystem").value);
+            totalScore += parseInt(document.getElementById("nutrition").value);
+            totalScore += parseInt(document.getElementById("tobacco").value);
+
+            const maxScore = 81;
+            const probability = (totalScore / maxScore) * 100;
+
+            let resultText = `Вероятность наличия активного ТБ: ${probability.toFixed(2)}%`;
+
+            if (probability > 20) {
+                resultText += " - Высокий риск. Рекомендуется сдача мокроты на молекулярно-генетический метод Expert MTB/Rif(генэксперт), микроскопию и пройти обследование обзорной рентгенограммой органов грудной клетки.";
+            }
+
+            document.getElementById("result").innerText = resultText;
+        }
+    </script>
+        <a href="{{url_for('logout')}}" class="btn btn-logout">Logout</a>
+</body>
+</html>
